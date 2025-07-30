@@ -14,30 +14,48 @@ alias ExpenseTracker.Expenses.Category
 alias ExpenseTracker.Repo
 alias ExpenseTracker.Expenses.Expense
 
-for category <- ["Food", "Transportation", "Entertainment"] do
-  monthly_budget = Enum.random(100..1200) |> to_string() |> Decimal.new()
-  amount = Enum.random(2..200) |> to_string() |> Decimal.new()
+category_expense_names =
+  %{
+    "Food" => [
+      "Groceries", "Restaurant Dinner", "Coffee Shop", "Lunch Out", "Snacks",
+      "Takeaway", "Breakfast", "Bakery Items", "Smoothie", "Catering"
+    ],
+    "Transportation" => [
+      "Fuel", "Public Transport Pass", "Taxi Ride", "Ride-share", "Parking Fee",
+      "Car Maintenance", "Toll Charges", "Flight Ticket", "Bus Fare", "Train Ticket"
+    ],
+    "Entertainment" => [
+      "Movie Tickets", "Concert", "Streaming Service Subscription", "Video Game Purchase",
+      "Museum Entry", "Book Purchase", "Sporting Event", "Theme Park Ticket", "Board Game",
+      "Live Show"
+    ]
+  }
 
-  random_expense_name =
-    [?a..?z, ?A..?Z, ?0..?9] |> Enum.concat() |> Enum.take_random(4) |> List.to_string()
+
+for category_name <- Map.keys(category_expense_names) do
+  monthly_budget = Enum.random(100..1200) |> to_string() |> Decimal.new()
 
   category =
     %Category{
-      description: "some description",
+      description: "Some description for #{category_name} category.",
       monthly_budget: monthly_budget,
-      name: category
+      name: category_name
     }
     |> Repo.insert!()
 
   expenses_count = Enum.random(1..10)
 
+  relevant_expense_names = category_expense_names[category_name]
+
   for _ <- 1..expenses_count do
+    expense_description = Enum.random(relevant_expense_names) || "Miscellaneous Expense"
+    amount = Enum.random(2..200) |> to_string() |> Decimal.new()
     %Expense{
-      date: ~D[2025-07-29],
-      optional_notes: "some optional_notes",
+      date: Date.add(Date.utc_today(), Enum.random(-365..365)),
+      optional_notes: "Some optional notes for #{expense_description}.",
       category_id: category.id,
       amount: amount,
-      description: "Expense #{random_expense_name}"
+      description: expense_description
     }
     |> Repo.insert!()
   end
