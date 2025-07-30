@@ -14,18 +14,18 @@ alias ExpenseTracker.Expenses.Category
 alias ExpenseTracker.Repo
 alias ExpenseTracker.Expenses.Expense
 
-for _ <- 1..11 do
+for category <- ["Food", "Transportation", "Entertainment"] do
   monthly_budget = Enum.random(100..1200) |> to_string() |> Decimal.new()
   amount = Enum.random(2..200) |> to_string() |> Decimal.new()
 
-  random_category_name =
+  random_expense_name =
     [?a..?z, ?A..?Z, ?0..?9] |> Enum.concat() |> Enum.take_random(4) |> List.to_string()
 
   category =
     %Category{
       description: "some description",
       monthly_budget: monthly_budget,
-      name: "Category #{random_category_name}"
+      name: category
     }
     |> Repo.insert!()
 
@@ -37,7 +37,7 @@ for _ <- 1..11 do
       optional_notes: "some optional_notes",
       category_id: category.id,
       amount: amount,
-      description: "Expense #{random_category_name}"
+      description: "Expense #{random_expense_name}"
     }
     |> Repo.insert!()
   end
