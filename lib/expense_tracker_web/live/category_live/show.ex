@@ -11,29 +11,30 @@ defmodule ExpenseTrackerWeb.CategoryLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
+  def handle_params(%{"id" => id} = params, _, socket) do
     category = Expenses.get_category_with_expenses!(id)
 
-    socket
-    |> assign(:page_title, page_title(socket.assigns.live_action))
-    |> assign(:category, category)
-    |> assign(:expense, %Expense{})
-    # |> assign_budget_data(category)
-    |> stream(:expenses, category.expenses)
-    |> noreply()
-  end
+    socket =
+      socket
+      |> assign(:page_title, page_title(socket.assigns.live_action))
+      |> assign(:category, category)
+      # |> assign_budget_data(category)
+      |> stream(:expenses, category.expenses)
 
-  def handle_params(%{"id" => id, "expense_id" => expense_id}, _, socket) do
-    category = Expenses.get_category_with_expenses!(id)
-    expense = Expenses.get_expense!(expense_id)
+    # Handle expense-related actions
+    socket = case socket.assigns.live_action do
+      :new_expense ->
+        assign(socket, :expense, %Expense{category_id: String.to_integer(id)})
 
-    socket
-    |> assign(:page_title, page_title(socket.assigns.live_action))
-    |> assign(:category, category)
-    |> assign(:expense, expense)
-    # |> assign_budget_data(category)
-    |> stream(:expenses, category.expenses)
-    |> noreply()
+      :edit_expense ->
+        expense = Expenses.get_expense!(params["expense_id"])
+        assign(socket, :expense, expense)
+
+      _ ->
+        socket
+    end
+
+    socket |> noreply()
   end
 
   def handle_params(%{}, _, socket) do
@@ -79,14 +80,13 @@ defmodule ExpenseTrackerWeb.CategoryLive.Show do
   defp assign_budget_data(socket, category) do
     total_spent = calculate_total_spent(category.expenses)
 
-    spending_percentage =
-      if Decimal.gt?(category.monthly_budget, 0) do
-        Decimal.div(total_spent, category.monthly_budget)
-        |> Decimal.mult(100)
-        |> Decimal.to_float()
-      else
-        0.0
-      end
+    spending_percentage = if Decimal.gt?(category.monthly_budget, 0) do
+      Decimal.div(total_spent, category.monthly_budget)
+      |> Decimal.mult(100)
+      |> Decimal.to_float()
+    else
+      0.0
+    end
 
     socket
     |> assign(:total_spent, total_spent)

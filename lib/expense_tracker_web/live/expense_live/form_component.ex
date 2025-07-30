@@ -9,7 +9,7 @@ defmodule ExpenseTrackerWeb.ExpenseLive.FormComponent do
     <div>
       <.header>
         {@title}
-        <:subtitle>Use this form to manage expense records in your database.</:subtitle>
+        <:subtitle>Use this form to manage expense records.</:subtitle>
       </.header>
 
       <.simple_form
@@ -52,7 +52,7 @@ defmodule ExpenseTrackerWeb.ExpenseLive.FormComponent do
     save_expense(socket, socket.assigns.action, expense_params)
   end
 
-  defp save_expense(socket, :edit, expense_params) do
+  defp save_expense(socket, :edit_expense, expense_params) do
     case Expenses.update_expense(socket.assigns.expense, expense_params) do
       {:ok, expense} ->
         notify_parent({:saved, expense})
