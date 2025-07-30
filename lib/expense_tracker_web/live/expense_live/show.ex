@@ -10,10 +10,10 @@ defmodule ExpenseTrackerWeb.ExpenseLive.Show do
 
   @impl true
   def handle_params(%{"expense_id" => id}, _, socket) do
-     socket
-     |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:expense, Expenses.get_expense!(id))
-     |> noreply()
+    socket
+    |> assign(:page_title, page_title(socket.assigns.live_action))
+    |> assign(:expense, Expenses.get_expense!(id))
+    |> noreply()
   end
 
   defp page_title(:show), do: "Show Expense"

@@ -7,6 +7,7 @@ defmodule ExpenseTracker.Expenses do
   alias ExpenseTracker.Repo
 
   alias ExpenseTracker.Expenses.Category
+  alias ExpenseTracker.Expenses.Expense
 
   @doc """
   Returns the list of categories.
@@ -37,7 +38,10 @@ defmodule ExpenseTracker.Expenses do
   """
   def get_category!(id), do: Repo.get!(Category, id)
 
-  def get_category_with_expenses!(id), do: Repo.get!(Category, id) |> Repo.preload(:expenses)
+  def get_category_with_expenses!(id) do
+    Repo.get!(Category, id)
+    |> Repo.preload(expenses: from(e in Expense, order_by: [desc: e.date]))
+  end
 
   @doc """
   Creates a category.

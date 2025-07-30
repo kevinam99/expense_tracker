@@ -32,7 +32,13 @@
   <div class="mt-4">
     <div class="flex justify-between text-sm text-gray-600 mb-1">
       <span>Progress</span>
-      <span>{:erlang.float_to_binary(@spending_percentage, decimals: 1)}% used</span>
+      <span>
+        {:erlang.float_to_binary(@spending_percentage, decimals: 1)}% used ({Decimal.sub(
+          @category.monthly_budget,
+          @total_spent
+        )
+        |> Number.Currency.number_to_currency()} remaining)
+      </span>
     </div>
     <div class="w-full bg-gray-200 rounded-full h-3">
       <div
@@ -50,8 +56,7 @@
     </div>
     <%= if @spending_percentage >= 100 do %>
       <p class="text-red-600 text-sm mt-1 font-medium">
-        ⚠️ Budget exceeded (-{Decimal.sub(@total_spent, @category.monthly_budget)
-        |> Number.Currency.number_to_currency()})!
+        ⚠️ Budget exceeded!
       </p>
     <% end %>
   </div>

@@ -17,20 +17,42 @@ alias ExpenseTracker.Expenses.Expense
 category_expense_names =
   %{
     "Food" => [
-      "Groceries", "Restaurant Dinner", "Coffee Shop", "Lunch Out", "Snacks",
-      "Takeaway", "Breakfast", "Bakery Items", "Smoothie", "Catering"
+      "Groceries",
+      "Restaurant Dinner",
+      "Coffee Shop",
+      "Lunch Out",
+      "Snacks",
+      "Takeaway",
+      "Breakfast",
+      "Bakery Items",
+      "Smoothie",
+      "Catering"
     ],
     "Transportation" => [
-      "Fuel", "Public Transport Pass", "Taxi Ride", "Ride-share", "Parking Fee",
-      "Car Maintenance", "Toll Charges", "Flight Ticket", "Bus Fare", "Train Ticket"
+      "Fuel",
+      "Public Transport Pass",
+      "Taxi Ride",
+      "Ride-share",
+      "Parking Fee",
+      "Car Maintenance",
+      "Toll Charges",
+      "Flight Ticket",
+      "Bus Fare",
+      "Train Ticket"
     ],
     "Entertainment" => [
-      "Movie Tickets", "Concert", "Streaming Service Subscription", "Video Game Purchase",
-      "Museum Entry", "Book Purchase", "Sporting Event", "Theme Park Ticket", "Board Game",
+      "Movie Tickets",
+      "Concert",
+      "Streaming Service Subscription",
+      "Video Game Purchase",
+      "Museum Entry",
+      "Book Purchase",
+      "Sporting Event",
+      "Theme Park Ticket",
+      "Board Game",
       "Live Show"
     ]
   }
-
 
 for category_name <- Map.keys(category_expense_names) do
   monthly_budget = Enum.random(100..1200) |> to_string() |> Decimal.new()
@@ -50,6 +72,7 @@ for category_name <- Map.keys(category_expense_names) do
   for _ <- 1..expenses_count do
     expense_description = Enum.random(relevant_expense_names) || "Miscellaneous Expense"
     amount = Enum.random(2..200) |> to_string() |> Decimal.new()
+
     %Expense{
       date: Date.add(Date.utc_today(), Enum.random(-365..365)),
       optional_notes: "Some optional notes for #{expense_description}.",
