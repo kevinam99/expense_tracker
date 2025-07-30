@@ -19,26 +19,28 @@
 </.list>
 
 <!-- Budget Progress Section -->
-<%!-- <div class="mt-8 mb-6">
+<div class="mt-8 mb-6">
   <.header>
     Budget Progress
     <:subtitle>
-      {Number.Currency.number_to_currency(@total_spent)} of {Number.Currency.number_to_currency(@category.monthly_budget)} spent
+      {Number.Currency.number_to_currency(@total_spent)} of {Number.Currency.number_to_currency(
+        @category.monthly_budget
+      )} spent
     </:subtitle>
   </.header>
-  
+
   <div class="mt-4">
     <div class="flex justify-between text-sm text-gray-600 mb-1">
       <span>Progress</span>
       <span>{:erlang.float_to_binary(@spending_percentage, decimals: 1)}% used</span>
     </div>
     <div class="w-full bg-gray-200 rounded-full h-3">
-      <div 
+      <div
         class={[
           "h-3 rounded-full transition-all duration-300",
           cond do
             @spending_percentage >= 100 -> "bg-red-500"
-            @spending_percentage >= 80 -> "bg-yellow-500" 
+            @spending_percentage >= 80 -> "bg-yellow-500"
             true -> "bg-green-500"
           end
         ]}
@@ -47,10 +49,13 @@
       </div>
     </div>
     <%= if @spending_percentage >= 100 do %>
-      <p class="text-red-600 text-sm mt-1 font-medium">⚠️ Budget exceeded!</p>
+      <p class="text-red-600 text-sm mt-1 font-medium">
+        ⚠️ Budget exceeded (-{Decimal.sub(@total_spent, @category.monthly_budget)
+        |> Number.Currency.number_to_currency()})!
+      </p>
     <% end %>
   </div>
-</div> --%>
+</div>
 
 <.header>
   Expenses

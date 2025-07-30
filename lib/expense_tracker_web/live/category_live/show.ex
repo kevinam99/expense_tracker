@@ -18,21 +18,22 @@ defmodule ExpenseTrackerWeb.CategoryLive.Show do
       socket
       |> assign(:page_title, page_title(socket.assigns.live_action))
       |> assign(:category, category)
-      # |> assign_budget_data(category)
+      |> assign_budget_data(category)
       |> stream(:expenses, category.expenses)
 
     # Handle expense-related actions
-    socket = case socket.assigns.live_action do
-      :new_expense ->
-        assign(socket, :expense, %Expense{category_id: String.to_integer(id)})
+    socket =
+      case socket.assigns.live_action do
+        :new_expense ->
+          assign(socket, :expense, %Expense{category_id: String.to_integer(id)})
 
-      :edit_expense ->
-        expense = Expenses.get_expense!(params["expense_id"])
-        assign(socket, :expense, expense)
+        :edit_expense ->
+          expense = Expenses.get_expense!(params["expense_id"])
+          assign(socket, :expense, expense)
 
-      _ ->
-        socket
-    end
+        _ ->
+          socket
+      end
 
     socket |> noreply()
   end
@@ -54,7 +55,7 @@ defmodule ExpenseTrackerWeb.CategoryLive.Show do
 
     socket
     |> assign(:category, category)
-    # |> assign_budget_data(category)
+    |> assign_budget_data(category)
     |> stream(:expenses, category.expenses, reset: true)
     |> put_flash(:info, "Expense saved successfully")
     |> noreply()
@@ -70,7 +71,7 @@ defmodule ExpenseTrackerWeb.CategoryLive.Show do
 
     socket
     |> assign(:category, category)
-    # |> assign_budget_data(category)
+    |> assign_budget_data(category)
     |> stream_delete(:expenses, expense)
     |> put_flash(:info, "Expense deleted successfully")
     |> noreply()
@@ -80,13 +81,14 @@ defmodule ExpenseTrackerWeb.CategoryLive.Show do
   defp assign_budget_data(socket, category) do
     total_spent = calculate_total_spent(category.expenses)
 
-    spending_percentage = if Decimal.gt?(category.monthly_budget, 0) do
-      Decimal.div(total_spent, category.monthly_budget)
-      |> Decimal.mult(100)
-      |> Decimal.to_float()
-    else
-      0.0
-    end
+    spending_percentage =
+      if Decimal.gt?(category.monthly_budget, 0) do
+        Decimal.div(total_spent, category.monthly_budget)
+        |> Decimal.mult(100)
+        |> Decimal.to_float()
+      else
+        0.0
+      end
 
     socket
     |> assign(:total_spent, total_spent)
