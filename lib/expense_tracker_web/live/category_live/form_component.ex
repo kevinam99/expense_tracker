@@ -57,7 +57,7 @@ defmodule ExpenseTrackerWeb.CategoryLive.FormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Category updated successfully")
+         |> put_flash(:info, "Category #{category.name} updated successfully")
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -72,7 +72,7 @@ defmodule ExpenseTrackerWeb.CategoryLive.FormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Category created successfully")
+         |> put_flash(:info, "Category #{category.name} created successfully")
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->

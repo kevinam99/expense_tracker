@@ -14,7 +14,9 @@
 >
   <:col :let={{_id, category}} label="Name">{category.name}</:col>
   <:col :let={{_id, category}} label="Description">{category.description}</:col>
-  <:col :let={{_id, category}} label="Monthly budget">{category.monthly_budget}</:col>
+  <:col :let={{_id, category}} label="Monthly budget">
+    {Number.Currency.number_to_currency(category.monthly_budget)}
+  </:col>
   <:action :let={{_id, category}}>
     <div class="sr-only">
       <.link navigate={~p"/categories/#{category}"}>Show</.link>
@@ -31,7 +33,12 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="category-modal" show on_cancel={JS.patch(~p"/categories")}>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="category-modal"
+  show
+  on_cancel={JS.patch(~p"/categories")}
+>
   <.live_component
     module={ExpenseTrackerWeb.CategoryLive.FormComponent}
     id={@category.id || :new}

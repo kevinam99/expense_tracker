@@ -14,6 +14,9 @@ defmodule ExpenseTracker.Expenses.Category do
   def changeset(category, attrs) do
     category
     |> cast(attrs, [:name, :description, :monthly_budget])
+    |> validate_number(:monthly_budget, greater_than: 0)
+    |> validate_length(:name, min: 3)
+    |> validate_length(:description, min: 5)
     |> validate_required([:name, :description, :monthly_budget])
   end
 end
