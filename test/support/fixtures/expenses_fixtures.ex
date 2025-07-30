@@ -19,4 +19,22 @@ defmodule ExpenseTracker.ExpensesFixtures do
 
     category
   end
+
+  @doc """
+  Generate a expense.
+  """
+  def expense_fixture(attrs \\ %{}) do
+    {:ok, expense} =
+      attrs
+      |> Enum.into(%{
+        amount: "120.5",
+        date: ~D[2025-07-29],
+        description: "some description",
+        optional_notes: "some optional_notes",
+        purpose: "some purpose"
+      })
+      |> ExpenseTracker.Expenses.create_expense()
+
+    expense
+  end
 end

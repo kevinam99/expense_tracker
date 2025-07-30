@@ -1,3 +1,4 @@
+<.back navigate={~p"/categories"}>Back to categories</.back>
 <.header>
   Category {@category.id}
   <:subtitle>This is a category record from your database.</:subtitle>
@@ -16,7 +17,31 @@
   </:item>
 </.list>
 
-<.back navigate={~p"/categories"}>Back to categories</.back>
+<%!-- <.table
+  id="expenses"
+  rows={@streams.expenses}
+  row_click={fn {_id, category} -> JS.navigate(~p"/categories/#{category}") end}
+>
+  <:col :let={{_id, category}} label="Name">{category.name}</:col>
+  <:col :let={{_id, category}} label="Description">{category.description}</:col>
+  <:col :let={{_id, category}} label="Monthly budget">
+    {Number.Currency.number_to_currency(category.monthly_budget)}
+  </:col>
+  <:action :let={{_id, category}}>
+    <div class="sr-only">
+      <.link navigate={~p"/categories/#{category}"}>Show</.link>
+    </div>
+    <.link patch={~p"/categories/#{category}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, category}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: category.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table> --%>
 
 <.modal
   :if={@live_action == :edit}

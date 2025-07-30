@@ -7,6 +7,8 @@ defmodule ExpenseTracker.Expenses.Category do
     field :description, :string
     field :monthly_budget, :decimal
 
+    has_many(:expenses, ExpenseTracker.Expenses.Expense, on_delete: :delete_all)
+
     timestamps(type: :utc_datetime)
   end
 
