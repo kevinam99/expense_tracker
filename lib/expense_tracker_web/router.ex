@@ -26,6 +26,11 @@ defmodule ExpenseTrackerWeb.Router do
     live "/categories/:id", CategoryLive.Show, :show
     live "/categories/:id/show/edit", CategoryLive.Show, :edit
 
+    # Nested expense routes within category
+    live "/categories/:id/expenses/new", CategoryLive.Show, :new_expense
+    live "/categories/:id/expenses/:expense_id/edit", CategoryLive.Show, :edit_expense
+    live "/categories/:id/expenses/:expense_id", ExpenseLive.Show, :show
+
     live "/expenses", ExpenseLive.Index, :index
     live "/expenses/new", ExpenseLive.Index, :new
     live "/expenses/:id/edit", ExpenseLive.Index, :edit

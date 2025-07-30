@@ -16,9 +16,9 @@ defmodule ExpenseTracker.Expenses.Expense do
   @doc false
   def changeset(expense, attrs) do
     expense
-    |> cast(attrs, [:description, :amount, :date, :optional_notes])
+    |> cast(attrs, [:description, :amount, :date, :optional_notes, :category_id])
     |> validate_length(:description, min: 3)
     |> validate_number(:amount, greater_than: 0)
-    |> validate_required([:description, :amount, :date])
+    |> validate_required([:description, :amount, :date, :category_id])
   end
 end

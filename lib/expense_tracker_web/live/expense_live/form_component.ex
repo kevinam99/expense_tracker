@@ -48,6 +48,7 @@ defmodule ExpenseTrackerWeb.ExpenseLive.FormComponent do
   end
 
   def handle_event("save", %{"expense" => expense_params}, socket) do
+    expense_params = Map.put(expense_params, "category_id", socket.assigns.category.id)
     save_expense(socket, socket.assigns.action, expense_params)
   end
 
@@ -66,7 +67,7 @@ defmodule ExpenseTrackerWeb.ExpenseLive.FormComponent do
     end
   end
 
-  defp save_expense(socket, :new, expense_params) do
+  defp save_expense(socket, :new_expense, expense_params) do
     case Expenses.create_expense(expense_params) do
       {:ok, expense} ->
         notify_parent({:saved, expense})

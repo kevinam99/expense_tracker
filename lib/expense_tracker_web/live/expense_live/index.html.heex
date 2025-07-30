@@ -1,3 +1,6 @@
+<.back navigate={if @expense, do: ~p"/categories/#{@expense.category_id}", else: ~p"/categories"}>
+  Back to expenses
+</.back>
 <.header>
   Listing Expenses
   <:actions>
@@ -38,7 +41,11 @@
   :if={@live_action in [:new, :edit]}
   id="expense-modal"
   show
-  on_cancel={JS.patch(~p"/expenses")}
+  on_cancel={
+    if @expense.id,
+      do: JS.patch(~p"/categories/#{@expense.category_id}"),
+      else: JS.patch(~p"/categories")
+  }
 >
   <.live_component
     module={ExpenseTrackerWeb.ExpenseLive.FormComponent}
@@ -46,6 +53,6 @@
     title={@page_title}
     action={@live_action}
     expense={@expense}
-    patch={~p"/expenses"}
+    patch={if @expense.id, do: ~p"/categories/#{@expense.category_id}", else: ~p"/categories/"}
   />
 </.modal>

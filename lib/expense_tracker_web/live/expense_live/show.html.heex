@@ -1,3 +1,4 @@
+<.back navigate={~p"/categories/#{@expense.category_id}"}>Back to expenses</.back>
 <.header>
   Expense {@expense.id}
   <:subtitle>This is a expense record from your database.</:subtitle>
@@ -14,8 +15,6 @@
   <:item title="Date">{@expense.date}</:item>
   <:item title="Optional notes">{@expense.optional_notes}</:item>
 </.list>
-
-<.back navigate={~p"/expenses"}>Back to expenses</.back>
 
 <.modal
   :if={@live_action == :edit}
