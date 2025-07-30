@@ -35,7 +35,12 @@ defmodule ExpenseTracker.ExpensesTest do
 
     test "update_category/2 with valid data updates the category" do
       category = category_fixture()
-      update_attrs = %{name: "some updated name", description: "some updated description", monthly_budget: "456.7"}
+
+      update_attrs = %{
+        name: "some updated name",
+        description: "some updated description",
+        monthly_budget: "456.7"
+      }
 
       assert {:ok, %Category{} = category} = Expenses.update_category(category, update_attrs)
       assert category.name == "some updated name"

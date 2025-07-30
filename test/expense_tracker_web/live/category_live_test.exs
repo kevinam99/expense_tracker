@@ -5,7 +5,11 @@ defmodule ExpenseTrackerWeb.CategoryLiveTest do
   import ExpenseTracker.ExpensesFixtures
 
   @create_attrs %{name: "some name", description: "some description", monthly_budget: "120.5"}
-  @update_attrs %{name: "some updated name", description: "some updated description", monthly_budget: "456.7"}
+  @update_attrs %{
+    name: "some updated name",
+    description: "some updated description",
+    monthly_budget: "456.7"
+  }
   @invalid_attrs %{name: nil, description: nil, monthly_budget: nil}
 
   defp create_category(_) do
@@ -42,7 +46,7 @@ defmodule ExpenseTrackerWeb.CategoryLiveTest do
       assert_patch(index_live, ~p"/categories")
 
       html = render(index_live)
-      assert html =~ "Category created successfully"
+      assert html =~ "Category #{@create_attrs.name} created successfully"
       assert html =~ "some name"
     end
 
@@ -65,7 +69,7 @@ defmodule ExpenseTrackerWeb.CategoryLiveTest do
       assert_patch(index_live, ~p"/categories")
 
       html = render(index_live)
-      assert html =~ "Category updated successfully"
+      assert html =~ "Category #{@update_attrs.name} updated successfully"
       assert html =~ "some updated name"
     end
 
@@ -106,7 +110,7 @@ defmodule ExpenseTrackerWeb.CategoryLiveTest do
       assert_patch(show_live, ~p"/categories/#{category}")
 
       html = render(show_live)
-      assert html =~ "Category updated successfully"
+      assert html =~ "Category #{@update_attrs.name} updated successfully"
       assert html =~ "some updated name"
     end
   end
