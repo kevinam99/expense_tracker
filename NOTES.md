@@ -1,10 +1,11 @@
 # Expense Tracker - A Phoenix LiveView project
 
 ## Approach to handling money/currency
-Money can't be handled like normal numbers. Precision matters. I used the `Decimal` type to store the numbers. For displaying them, I used the `Number` package to display in the appropriate currency format
+Money can't be handled like normal numbers. Precision matters. I used the `Decimal` type to store and work with the numbers. For displaying them, I used the `Number` package to display in the appropriate currency format
 
 ## Describe any architectural decisions you made
 I decided to have a main context `Expense` which has cateogries and expenses.
+I allowed expense tracking for future dates so that known future expenses can already be tracked immediately.
 
 ## Note any trade-offs or shortcuts taken due to time constraints
 I decided to write tests with AI - at least the LiveView tests. Since I am primarily a backend developer, I used the generators in Phoenix to generate the frontend components to spend minimum time in styling them myself
