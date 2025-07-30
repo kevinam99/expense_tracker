@@ -12,7 +12,6 @@
   rows={@streams.expenses}
   row_click={fn {_id, expense} -> JS.navigate(~p"/expenses/#{expense}") end}
 >
-  <:col :let={{_id, expense}} label="Purpose">{expense.purpose}</:col>
   <:col :let={{_id, expense}} label="Description">{expense.description}</:col>
   <:col :let={{_id, expense}} label="Amount">
     {Number.Currency.number_to_currency(expense.amount)}

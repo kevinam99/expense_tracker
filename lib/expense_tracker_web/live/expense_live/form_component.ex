@@ -19,7 +19,6 @@ defmodule ExpenseTrackerWeb.ExpenseLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:purpose]} type="text" label="Purpose" />
         <.input field={@form[:description]} type="text" label="Description" />
         <.input field={@form[:amount]} type="number" label="Amount" step="any" />
         <.input field={@form[:date]} type="date" label="Date" />

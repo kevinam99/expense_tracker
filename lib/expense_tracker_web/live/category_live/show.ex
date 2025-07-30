@@ -13,7 +13,7 @@ defmodule ExpenseTrackerWeb.CategoryLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:category, Expenses.get_category!(id))}
+     |> assign(:category, Expenses.get_category_with_expenses!(id))}
   end
 
   defp page_title(:show), do: "Show Category"

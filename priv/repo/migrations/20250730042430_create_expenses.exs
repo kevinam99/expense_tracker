@@ -3,7 +3,6 @@ defmodule ExpenseTracker.Repo.Migrations.CreateExpenses do
 
   def change do
     create table(:expenses) do
-      add :purpose, :string
       add :description, :string
       add :amount, :decimal
       add :date, :date
