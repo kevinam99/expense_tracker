@@ -31,7 +31,6 @@ defmodule ExpenseTracker.ExpensesFixtures do
         date: ~D[2025-07-29],
         description: "some description",
         optional_notes: "some optional_notes",
-        purpose: "some purpose"
       })
       |> ExpenseTracker.Expenses.create_expense()
 
