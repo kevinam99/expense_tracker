@@ -10,6 +10,8 @@ Negative amounts are handled within the form validation.
 To handle multiple currencies, there could be two ways
 - have a setting `currency` to allow picking any one currency that will apply to ALL expenses
 - allow currency setting for each expense having any one as the default. Consequently, the progress chart would have to be shown for each currency and perhaps, also have budget for every currency which could get messy.
+- I would also update to having currency based separators and delimiters. For example, in most parts of the world, the decimal point is used to denote sub zero currency amount and the comma is used for showing thousands, millions etc. In Europe, the convention is the opposite. The Indian number system doesn't have the million, so the placement of the comma changes. 
+So these edge cases would have to be considered when adding multiple currency support. Or there can be a setting for this to help keep things simple.
 
 ## Architectural decisions made
 I decided to have a main context `Expense` which has cateogries and expenses.
@@ -19,6 +21,9 @@ I allowed expense tracking for future dates so that known future expenses can al
 When a category's budget is overspent, the progress bar turns red with a message showing the exact amount by which the budget is exceeded.
 
 I still allow the expenses to be added because disallowing it doesn't change the fact that an expense occurred
+
+## UX decisions 
+While I list the recent expenses first, I didn't apply a specific sorting for the categories. The reason being that it is a high-level parameter and requires to be at the same position when a user wants to perform analysis. It would be terrible UX if the position of the categories changes with the expenses.
 
 ## Trade-offs or shortcuts taken due to time constraints
 I decided to write tests with AI - at least the LiveView tests. Since I am primarily a backend developer, I used the generators in Phoenix to generate the frontend components to spend minimum time in styling them myself
